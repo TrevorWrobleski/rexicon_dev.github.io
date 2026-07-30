@@ -4,25 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rexicon, offline live interpreter for English &amp; Chinese</title>
-<meta name="description" content="A private, offline transcription and translation assistant for interpreters. Live English ⇆ Chinese, entirely on your own machine. One-time payment, no subscription.">
+<meta name="description" content="A private, offline transcription and translation assistant for interpreters. Live English ⇆ Chinese, entirely on your own machine. One-time download, no subscription.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rexicon, offline live interpreter for English & Chinese">
-<meta property="og:description" content="Private, offline live transcription and translation for interpreters. English ⇆ Chinese, on your own machine. Bought once.">
-<!-- og:image, drop a share image (1200×630) here before launch:
-<meta property="og:image" content="https://YOUR_DOMAIN/og.png"> -->
+<meta property="og:description" content="Private, offline live transcription and translation for interpreters. English ⇆ Chinese, on your own machine.">
 <link rel="icon" type="image/png" href="assets/rexicon-logo-x4.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ─────────────────────────────────────────────────────────────
-   Rexicon landing page
-   Palette + type roles are taken directly from the app (rexicon_op1.py):
-     serif (EB Garamond) = human speech / the transcript
-     mono  (IBM Plex Mono) = the machine's marks: timestamps, state, labels
-     sans  (Inter) = the interface chrome
-   Sage is the everyday accent. Amber is reserved for the LIVE state only.
-   ───────────────────────────────────────────────────────────── */
+
 
 :root{
   --paper:#F5F1E8; --surface:#FBF8F2; --surface-alt:#EFF0E9;
@@ -186,7 +177,7 @@ header{
 }
 .callout h2{max-width:20ch;}
 
-/* ── pricing ── */
+/* ── download ── */
 .price-card{
   max-width:640px; margin-inline:auto; text-align:center;
   background:var(--surface); border:1px solid var(--border);
@@ -265,12 +256,12 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     <nav class="nav-links" aria-label="Primary">
       <a href="#features">What it does</a>
       <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#download">Download</a>
     </nav>
     <div class="nav-right">
       <button class="theme-toggle" id="themeBtn" aria-label="Switch to dark mode" aria-pressed="false">☾</button>
       <!-- Replace STOREFRONT_URL with your Gumroad / Polar / Lemon Squeezy checkout link -->
-      <a class="btn btn-primary" href="STOREFRONT_URL">Buy ($29)</a>
+      <a class="btn btn-primary" href="STOREFRONT_URL"> Download </a>
     </div>
   </div>
 </header>
@@ -282,17 +273,16 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     <div class="hero-copy">
       <span class="eyebrow">Offline interpreter's assistant</span>
       <h1>English and Chinese, transcribed and translated as you listen.</h1>
-      <p class="lead">Rexicon runs on your own computer. No account, no cloud, no subscription.</p>
+      <p class="lead">Rexicon runs on your own computer without needing an account, cloud, or subscription.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="STOREFRONT_URL">Buy ($29)</a>
-        <!-- Replace GITHUB_URL with your repository link -->
+        <a class="btn btn-primary" href="STOREFRONT_URL">Download </a>
+        <!-- I'll include the github repo when it's public -->
         <a class="btn btn-ghost" href="GITHUB_URL">View on GitHub</a>
       </div>
-      <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; one-time payment &nbsp;·&nbsp; no subscription &nbsp;·&nbsp; no account</p>
+      <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; one-time download &nbsp;·&nbsp; no subscription &nbsp;·&nbsp; no account</p>
     </div>
 
     <!-- Signature element: a faithful, self-animating recreation of the live view.
-         Keep it, or swap in a real screen-recording GIF/MP4 once you have one.
          Source (transcription) sits left, translation right, as in the app. -->
     <div class="panel" aria-hidden="true">
       <div class="panel-top">
@@ -323,12 +313,12 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M17.5 18.5h-9a4.5 4.5 0 0 1-1.6-8.7A6 6 0 0 1 18.4 11"/><line x1="4" y1="4" x2="20" y2="20"/></svg></span>
         <div class="card-title">Offline</div>
-        <p class="card-body">After a one-time model download it needs no connection. It keeps working on a plane, in a booth with dead wifi, or in a building that blocks the outside.</p>
+        <p class="card-body">After a one-time model download it needs no connection. It keeps working on a plane, in a booth with dead wifi, or in a building that blocks reception.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M20 12.5 12.5 20 4 11.5V4h7.5L20 12.5Z"/><circle cx="8.6" cy="8.6" r="1.3"/></svg></span>
-        <div class="card-title">Bought once</div>
-        <p class="card-body">Buy it once and it's yours. No subscription, no usage limits, nothing metered by the minute, the word, or the file.</p>
+        <div class="card-title">Downloaded once</div>
+        <p class="card-body">After downloading the app and the model, you can run transcription and translation with no usage limits or metering, live or from a file.</p>
       </div>
     </div>
   </section>
@@ -340,7 +330,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h11a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><line x1="6" y1="8.5" x2="13" y2="8.5"/></svg></span>
         <div class="card-title">Paired entries, live</div>
-        <p class="card-body">It listens to the speaker and, at each natural pause, writes that whole phrase as one clean block with its translation beside it (source and meaning always lined up, never a stream that rewrites itself).</p>
+        <p class="card-body">It listens to the speaker and, at each pause, transcribes the phrase as a block. With translation on, it also provides the the translation. You can also switch between languages with the click of a button.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="13" y2="16.5"/></svg></span>
@@ -349,13 +339,13 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg></span>
-        <div class="card-title">Export and autosave</div>
+        <div class="card-title">Export and save</div>
         <p class="card-body">Keep a plain-text transcript of any session. Long jobs autosave to disk as they finish, so a slow render never loses your work.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><line x1="12" y1="17" x2="12" y2="20"/><line x1="9" y1="20" x2="15" y2="20"/></svg></span>
-        <div class="card-title">Hears the room, not you</div>
-        <p class="card-body">Point it at any input device, so it transcribes the speaker you're interpreting for, not your own voice coming back over your headset.</p>
+        <div class="card-title">Select audio sorce</div>
+        <p class="card-body">You can select any input device, so it transcribes the speaker you're interpreting for, not your own voice coming back over your headset.</p>
       </div>
     </div>
   </section>
@@ -364,23 +354,23 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
   <section class="wrap section" id="how">
     <div class="how-head">
       <span class="eyebrow">How it works</span>
-      <h2>One phrase at a time, on purpose.</h2>
+      <h2>One phrase at a time.</h2>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
         <h3>Listen</h3>
-        <p>It buffers the audio quietly while someone is speaking.</p>
+        <p>It buffers the audio while someone is speaking.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
         <h3>Wait for the pause</h3>
-        <p>When they stop, it knows the phrase is finished, not mid-pause.</p>
+        <p>When the speaker stops, it recognizes the phrase is finished.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
         <h3>Transcription / translation</h3>
-        <p>It transcribes and translates that phrase once, and shows the pair.</p>
+        <p>It transcribes (and translates if desired) that phrase once, and shows the pair.</p>
       </div>
     </div>
     <p class="note">The delay is about <b>half a second to 5 seconds</b>, depending on your machine, per phrase. In exchange you get stable, aligned text instead of a live stream that jitters and rewrites itself.</p>
@@ -395,7 +385,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </div>
       <div>
         <p>The first time you run it, it downloads the models it needs (around 1.5 GB), so it does need a connection to get set up. Once that's done, it works entirely on your machine.</p>
-        <p>No account, no server, no telemetry. Your audio and your transcripts stay with you, because there's nowhere else for them to go.</p>
+        <p> Your audio and your transcripts stay with you.</p>
       </div>
     </div>
   </section>
@@ -408,20 +398,20 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
         <h2>A safety net, not a replacement for you.</h2>
       </div>
       <div>
-        <p>Rexicon runs a mid-sized model tuned to keep up with a live speaker on an ordinary laptop, and that tuning costs accuracy. Expect mistakes on fast speech, strong accents, several people at once, background noise, numbers, names, and unusual terminology, often the moments that matter most.</p>
-        <p>The translation is machine translation: fine for the gist, but it won't catch register, idiom, or a deliberate ambiguity the way you will. Treat it as a second pair of ears and a memory aid, and don't put it in front of a patient or a courtroom and step away.</p>
+        <p>Rexicon runs a mid-sized model tuned to keep up with a live speaker on an ordinary laptop. Expect transcription errors on fast speech, strong accents, several people at once, background noise, and unusual terminology for a given context.</p>
+        <p>The translation is machine translation: fine for the gist, but it won't catch register, idiom, or a deliberate ambiguity the way a professional interpreter will. Treat it as a second pair of ears and a memory aid, and don't put it in front of a patient or a courtroom and step away.</p>
       </div>
     </div>
   </section>
 
-  <!-- ───────────────────────── PRICING ───────────────────────── -->
-  <section class="wrap section" id="pricing">
-    <span class="eyebrow" style="text-align:center;">Pricing</span>
+  <!-- ───────────────────────── Download ───────────────────────── -->
+  <section class="wrap section" id="download">
+    <span class="eyebrow" style="text-align:center;">Download</span>
     <div class="price-card">
-      <div class="price-big">$29, once.</div>
+      <div class="price-big">Download once.</div>
       <p class="price-sub">Yours to keep and use for as long as it runs, on your own machines. There's no subscription, because there's nothing to subscribe to. It runs on your computer, not mine.</p>
-      <a class="btn btn-primary" href="STOREFRONT_URL">Buy Rexicon ($29)</a>
-      <p class="price-reqs">macOS 11+ or Windows 10 / 11 · about 3&nbsp;GB free disk<br>internet needed for the first-run model download</p>
+      <a class="btn btn-primary" href="STOREFRONT_URL">Download Rexicon </a>
+      <p class="price-reqs">macOS 12+ (Apple Silicon) or Windows 10 / 11 · about 3&nbsp;GB free disk<br>internet needed for the first-run model download</p>
     </div>
   </section>
 
@@ -429,7 +419,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
   <section class="wrap section">
     <div class="alt-head">
       <span class="eyebrow">Is it right for you?</span>
-      <h2>If something else fits better, use it.</h2>
+      <h2>Some suggestions for alternatives.</h2>
     </div>
     <div class="alt-list">
       <div class="alt-row">
@@ -445,7 +435,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
         <div class="alt-a"><b>InterpretBank</b> or a full CAI tool</div>
       </div>
     </div>
-    <p class="alt-foot">Rexicon is narrow on purpose: private, offline, one payment, built for English ↔ Chinese interpreting on both Mac and Windows. The README has the full comparison of every alternative. <a href="GITHUB_URL">Read it on GitHub →</a></p>
+    <p class="alt-foot">Rexicon offers a private, offline, one download application, built for English ↔ Chinese interpreting on both Mac and Windows. The README has the full comparison of more alternatives. <a href="GITHUB_URL">Read it on GitHub →</a></p>
   </section>
 
 </main>
@@ -453,11 +443,11 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 <!-- ───────────────────────── FOOTER ───────────────────────── -->
 <footer>
   <div class="wrap">
-    <p class="foot-note">I'm a PhD student. I built the first version for a friend who interprets, because the tools that do this well mostly live in the cloud, cost a subscription, and sometimes decide for you what they're willing to write down. <span>Rexicon won't do your job, but on a good day it'll catch a number you missed, or hold a phrase while you think. I hope it's useful.</span><br><span class="foot-sign">Trevor</span></p>
+    <p class="foot-note">I'm a PhD student. I built the first version for interpreter friends, because current tools were expensive to use and were often cloud-based. <span>I hope you find it helpful.</span><br><span class="foot-sign">Trevor</span></p>
     <div class="foot-bar">
       <a class="brand" href="#top" style="font-size:1.2rem;"><img class="brand-logo" src="assets/rexicon-logo-x4.png" alt="" style="height:24px;">Rexicon</a>
       <div class="foot-links">
-        <!-- Fill these in before launch -->
+        <!-- Still need to fill these in once I make the README public and decide on a license -->
         <a href="GITHUB_URL">GitHub</a>
         <a href="mailto:SUPPORT_EMAIL">Support</a>
         <a href="GITHUB_URL/blob/main/LICENSE">License</a>
