@@ -131,11 +131,25 @@ header{
 .meter span:nth-child(2){animation-delay:.15s;} .meter span:nth-child(3){animation-delay:.3s;} .meter span:nth-child(4){animation-delay:.45s;}
 @keyframes bar{0%,100%{height:25%;}50%{height:95%;}}
 
-.transcript{padding:10px 16px 16px; min-height:312px; display:flex; flex-direction:column; justify-content:flex-end; gap:16px;}
+/* FIXED height, not min-height, and the box clips its own overflow.
+   This is what keeps the page still. The panel is a hero grid item, so if
+   this box could grow (which it did for ~0.3s whenever a new entry arrived
+   before the oldest finished fading out) the whole page nudged down and then
+   back up. Now the box is always exactly this tall: entries stack from the
+   bottom, older ones pass out through the top and are clipped, and the mask
+   fades that top edge so the clip reads as intentional. Nothing outside this
+   box ever moves. */
+.transcript{
+  padding:10px 16px 16px;
+  height:312px; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 54px);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 54px);
+}
 /* Source (transcription) on the LEFT, translation on the RIGHT, matching the
    app's SegmentCard, which lays out source in column 1 and translation in
    column 3, side by side, with the timestamp ahead of them. */
-.entry{opacity:0; transform:translateY(9px);}
+.entry{opacity:0; transform:translateY(9px); flex:none;}
 .entry.shown{opacity:1; transform:none; transition:opacity .4s ease, transform .4s ease;}
 .entry.leaving{opacity:0; transition:opacity .3s ease;}
 .entry-meta{display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:.68rem; color:var(--taupe); margin-bottom:7px;}
@@ -232,6 +246,9 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
   .alt-a{text-align:left;}
 }
 @media (max-width:640px){
+  /* Stacked entries are taller, so give the (still fixed) box a little more
+     room. Fewer entries stay visible; the page still never moves. */
+  .transcript{height:340px;}
   .entry-cols{grid-template-columns:1fr; gap:4px;}
   .entry-src{padding-right:0;}
   .entry-tgt{padding-left:0; border-left:0;}
@@ -283,7 +300,9 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     </div>
 
     <!-- Signature element: a faithful, self-animating recreation of the live view.
-         Source (transcription) sits left, translation right, as in the app. -->
+         Source (transcription) sits left, translation right, as in the app.
+         The transcript box is a FIXED height (see .transcript in the CSS) so
+         this panel never resizes as entries arrive. -->
     <div class="panel" aria-hidden="true">
       <div class="panel-top">
         <div class="status"><span class="live-dot"></span><span id="statusText">Listening…</span></div>
@@ -330,7 +349,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h11a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><line x1="6" y1="8.5" x2="13" y2="8.5"/></svg></span>
         <div class="card-title">Paired entries, live</div>
-        <p class="card-body">It listens to the speaker and, at each pause, transcribes the phrase as a block. With translation on, it also provides the the translation. You can also switch between languages with the click of a button.</p>
+        <p class="card-body">It listens to the speaker and, at each pause, transcribes the phrase as a block. With translation on, it also provides the translation. You can also switch between languages with the click of a button.</p>
       </div>
       <div>
         <span class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="13" y2="16.5"/></svg></span>
@@ -476,7 +495,11 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
   /* ── the live panel ──
      Source (transcription) left, translation right, matching the app. All
      entries here are English-source (see the EN → 中文 label), so every dot
-     uses the sage source-language hue. */
+     uses the sage source-language hue.
+
+     Layout stability: the transcript box has a fixed height and clips its
+     overflow (see the CSS), so nothing here can resize the page. Old entries
+     are removed once they have faded, purely to keep the DOM small. */
   var box = document.getElementById('transcript');
   var statusEl = document.getElementById('statusText');
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -511,10 +534,11 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
   }
 
   function trim(){
-    if (box.children.length > 3){
-      var first = box.firstElementChild;
-      first.classList.add('leaving');
-      setTimeout(function(){ if(first.parentNode) first.parentNode.removeChild(first); }, 320);
+    // Keep a small buffer of entries. Anything beyond what the fixed-height
+    // box can show is already clipped and faded out of sight, so removing it
+    // is invisible and costs no layout.
+    while (box.children.length > 4){
+      box.removeChild(box.firstElementChild);
     }
   }
 
