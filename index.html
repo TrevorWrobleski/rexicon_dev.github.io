@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rexicon, offline transcription and translation for English &amp; Chinese</title>
+<meta name="description" content="An offline transcription and translation assistant for English–Chinese interpreters. Paired text, glossary references, and local processing after model setup.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rexicon, offline English &amp; Chinese transcription and translation">
+<meta property="og:description" content="An interpreter's assistant with paired transcripts, glossary references, and local processing after model setup.">
+
+<link rel="icon" type="image/png" href="assets/rexicon-logo-x4.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#F5F1E8; --surface:#FBF8F2; --surface-alt:#EFF0E9;
+  --ink:#2B2925; --taupe:#6B6459; --border:#E3DDD0;
+  --sage:#6E7B5B; --sage-hover:#5E6A4D;
+  --amber:#C68B3C; --amber-soft:rgba(198,139,60,.16);
+  --on-accent:#FBF8F2;
+  --en:#6E7B5B; --zh:#C68B3C;
+  --shadow:0 1px 2px rgba(43,41,37,.05), 0 22px 46px -30px rgba(43,41,37,.45);
+  --serif:"EB Garamond",Georgia,"Times New Roman",serif;
+  --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono","SF Mono",Menlo,"Courier New",monospace;
+  --wrap:1120px;
+}
+[data-theme="dark"]{
+  --paper:#1F1D1A; --surface:#2A2723; --surface-alt:#262420;
+  --ink:#EDE7DA; --taupe:#A89F8E; --border:#3A352E;
+  --sage:#9FA888; --sage-hover:#8C9676;
+  --amber:#D8A24A; --amber-soft:rgba(216,162,74,.18);
+  --on-accent:#1F1D1A;
+  --en:#9FA888; --zh:#D8A24A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 22px 46px -30px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  transition:background .35s ease, color .35s ease;
+}
+.wrap{max-width:var(--wrap); margin-inline:auto; padding-inline:clamp(20px,5vw,40px);}
+a{color:inherit;}
+:focus-visible{outline:2px solid var(--sage); outline-offset:3px; border-radius:4px;}
+
+h1,h2,h3{font-family:var(--serif); font-weight:500; letter-spacing:-.01em; margin:0;}
+p{margin:0;}
+
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; font-weight:500;
+  text-transform:uppercase; letter-spacing:.18em; color:var(--sage);
+  display:block; margin-bottom:1rem;
+}
+.lead{color:var(--taupe); font-size:1.12rem; line-height:1.62;}
+.section{padding-block:clamp(60px,9vw,108px); scroll-margin-top:88px;}
+
+.btn{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--sans); font-weight:600; font-size:.92rem;
+  padding:.72em 1.2em; border-radius:11px; border:1px solid transparent;
+  text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition:background .18s ease, border-color .18s ease, transform .18s ease, color .18s ease;
+}
+.btn-primary{background:var(--sage); color:var(--on-accent);}
+.btn-primary:hover{background:var(--sage-hover);}
+.btn-ghost{background:transparent; color:var(--ink); border-color:var(--border);}
+.btn-ghost:hover{background:var(--surface-alt);}
+.btn:active{transform:translateY(1px);}
+
+header{
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in srgb, var(--paper) 82%, transparent);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.nav{display:flex; align-items:center; justify-content:space-between; height:64px; gap:16px;}
+.brand{font-family:var(--serif); font-weight:600; font-size:1.4rem; letter-spacing:-.01em; text-decoration:none; display:flex; align-items:center; gap:.5rem;}
+.brand-logo{height:28px; width:auto; display:block; flex:none;}
+.nav-links{display:flex; align-items:center; gap:28px; font-size:.9rem; color:var(--taupe);}
+.nav-links a{text-decoration:none; transition:color .18s ease;}
+.nav-links a:hover{color:var(--ink);}
+.nav-right{display:flex; align-items:center; gap:12px;}
+.theme-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:38px; height:38px; border-radius:10px; cursor:pointer;
+  background:transparent; border:1px solid var(--border); color:var(--taupe);
+  font-size:1rem; transition:background .18s ease, color .18s ease;
+}
+.theme-toggle:hover{background:var(--surface-alt); color:var(--ink);}
+
+.hero{
+  display:grid; grid-template-columns:1.04fr .96fr; gap:clamp(32px,5vw,68px);
+  align-items:center; padding-top:clamp(44px,7vw,84px); padding-bottom:clamp(52px,8vw,96px);
+}
+.hero h1{font-size:clamp(2.4rem,5vw,3.85rem); line-height:1.06; max-width:16ch;}
+.hero .lead{margin-top:1.15rem; max-width:44ch;}
+.cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:1.9rem;}
+.hero-meta{
+  font-family:var(--mono); font-size:.76rem; color:var(--taupe);
+  letter-spacing:.02em; margin-top:1.5rem;
+}
+.hero-meta b{color:var(--ink); font-weight:500;}
+
+.panel{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:16px; box-shadow:var(--shadow); overflow:hidden;
+}
+.panel-top{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:13px 16px; border-bottom:1px solid var(--border);
+  background:color-mix(in srgb, var(--surface-alt) 60%, var(--surface));
+}
+.status{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:.74rem; color:var(--taupe);}
+.live-dot{width:9px; height:9px; border-radius:50%; background:var(--amber); box-shadow:0 0 0 0 var(--amber-soft); animation:pulse 1.9s ease-out infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 var(--amber-soft);}70%{box-shadow:0 0 0 9px transparent;}100%{box-shadow:0 0 0 0 transparent;}}
+.panel-right{display:flex; align-items:center; gap:12px;}
+.pair-label{font-family:var(--mono); font-size:.72rem; color:var(--taupe);}
+.meter{display:flex; align-items:flex-end; gap:2px; height:14px;}
+.meter span{width:2.5px; background:var(--amber); border-radius:2px; height:30%; animation:bar 1s ease-in-out infinite;}
+.meter span:nth-child(2){animation-delay:.15s;}
+.meter span:nth-child(3){animation-delay:.3s;}
+.meter span:nth-child(4){animation-delay:.45s;}
+@keyframes bar{0%,100%{height:25%;}50%{height:95%;}}
+
+/* Fixed height prevents incoming example entries from moving the page. */
+.transcript{
+  padding:10px 16px 16px;
+  height:312px; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 54px);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 54px);
+}
+.entry{opacity:0; transform:translateY(9px); flex:none;}
+.entry.shown{opacity:1; transform:none; transition:opacity .4s ease, transform .4s ease;}
+.entry.leaving{opacity:0; transition:opacity .3s ease;}
+.entry-meta{display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:.68rem; color:var(--taupe); margin-bottom:7px;}
+.entry-meta .dot{width:7px; height:7px; border-radius:50%; flex:none;}
+.entry-cols{display:grid; grid-template-columns:1fr 1fr; align-items:start;}
+.entry-src{font-family:var(--serif); font-size:1rem; line-height:1.4; color:var(--ink); padding-right:18px;}
+.entry-tgt{font-family:var(--serif); font-size:1rem; line-height:1.4; color:var(--taupe); padding-left:18px; border-left:1px solid var(--border);}
+
+.grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,40px);}
+.grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(22px,3vw,44px);}
+.ico{display:inline-flex; color:var(--sage); margin-bottom:.85rem;}
+.ico svg{width:23px; height:23px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+.card-title{font-family:var(--sans); font-weight:600; font-size:1.06rem; color:var(--ink); letter-spacing:0;}
+.card-body{color:var(--taupe); font-size:.97rem; line-height:1.6; margin-top:.45rem;}
+
+.how-head{max-width:38ch; margin-bottom:clamp(34px,5vw,52px);}
+.how-head h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.12; margin-top:.2rem;}
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,40px);}
+.step-num{font-family:var(--mono); font-size:1.05rem; color:var(--sage); font-weight:500;}
+.step h3{font-family:var(--sans); font-weight:600; font-size:1.05rem; margin-top:.5rem;}
+.step p{color:var(--taupe); font-size:.96rem; line-height:1.55; margin-top:.35rem;}
+.note{
+  margin-top:clamp(30px,4vw,44px); padding:clamp(20px,3vw,26px) clamp(22px,3vw,30px);
+  background:var(--surface-alt); border:1px solid var(--border); border-radius:13px;
+  color:var(--taupe); font-family:var(--serif); font-size:1.1rem; line-height:1.55; max-width:64ch;
+}
+.note b{color:var(--ink); font-weight:500;}
+
+.split{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(28px,5vw,64px); align-items:start;}
+.split h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.12; margin-top:.2rem; max-width:16ch;}
+.split p{color:var(--taupe); font-size:1.08rem; line-height:1.62;}
+.split p + p{margin-top:1rem;}
+.callout{
+  background:var(--surface-alt); border:1px solid var(--border);
+  border-radius:16px; padding:clamp(26px,4vw,44px);
+}
+.callout h2{max-width:20ch;}
+
+.price-card{
+  max-width:640px; margin-inline:auto; text-align:center;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:18px; padding:clamp(34px,5vw,56px); box-shadow:var(--shadow);
+}
+.price-big{font-family:var(--serif); font-size:clamp(2.4rem,5vw,3.2rem); line-height:1; margin:.2rem 0 0;}
+.price-sub{color:var(--taupe); margin:1.1rem auto 0; max-width:44ch; line-height:1.6;}
+.price-card .btn{margin-top:1.8rem;}
+.price-reqs{font-family:var(--mono); font-size:.72rem; color:var(--taupe); margin-top:1.5rem; line-height:1.7; letter-spacing:.01em;}
+
+.alt-head{max-width:34ch; margin-bottom:clamp(30px,4vw,44px);}
+.alt-head h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.12; margin-top:.2rem;}
+.alt-list{border-top:1px solid var(--border); max-width:820px;}
+.alt-row{
+  display:grid; grid-template-columns:1fr auto; gap:12px 28px; align-items:baseline;
+  padding:18px 0; border-bottom:1px solid var(--border);
+}
+.alt-q{color:var(--ink); font-size:1.02rem;}
+.alt-a{color:var(--taupe); font-size:.96rem; text-align:right;}
+.alt-a b{color:var(--sage); font-weight:600;}
+.alt-foot{margin-top:1.6rem; color:var(--taupe); max-width:60ch; line-height:1.6; font-size:1rem;}
+.alt-foot a{color:var(--sage); font-weight:600; text-decoration:none; border-bottom:1px solid color-mix(in srgb,var(--sage) 40%,transparent);}
+.alt-foot a:hover{border-bottom-color:var(--sage);}
+
+footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
+.foot-note{
+  font-family:var(--serif); font-size:1.18rem; line-height:1.6; color:var(--ink);
+  max-width:60ch; margin-bottom:clamp(34px,5vw,52px);
+}
+.foot-note span{color:var(--taupe);}
+.foot-sign{color:var(--sage); font-style:italic; display:inline-block; margin-top:.5rem;}
+.foot-bar{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; padding-bottom:22px; border-bottom:1px solid var(--border);}
+.foot-links{display:flex; gap:24px; font-size:.9rem; color:var(--taupe);}
+.foot-links a{text-decoration:none;}
+.foot-links a:hover{color:var(--ink);}
+.credits{font-size:.84rem; color:var(--taupe); line-height:1.6; margin-top:22px; max-width:80ch;}
+.copy{font-family:var(--mono); font-size:.72rem; color:var(--taupe); margin-top:18px; letter-spacing:.02em;}
+
+@media (max-width:920px){
+  .hero{grid-template-columns:1fr; gap:40px;}
+  .hero h1,.hero .lead{max-width:none;}
+  .panel{order:2;}
+  .split{grid-template-columns:1fr; gap:24px;}
+  .split h2,.callout h2{max-width:none;}
+}
+@media (max-width:760px){
+  .nav-links{display:none;}
+  .grid-3,.grid-2,.steps{grid-template-columns:1fr;}
+  .alt-row{grid-template-columns:1fr;}
+  .alt-a{text-align:left;}
+}
+@media (max-width:640px){
+  .transcript{height:340px;}
+  .entry-cols{grid-template-columns:1fr; gap:4px;}
+  .entry-src{padding-right:0;}
+  .entry-tgt{padding-left:0; border-left:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  .live-dot{animation:none;}
+  .meter{display:none;}
+  .entry{opacity:1; transform:none;}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Rexicon, home">
+      <img class="brand-logo" src="assets/rexicon-logo-x4.png" alt="Rexicon logo, a T-Rex wearing a crown">
+      Rexicon
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#features">What it does</a>
+      <a href="#how">How it works</a>
+      <a href="#download">Download</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">☾</button>
+      <!-- Replace STOREFRONT_URL before publishing a download. -->
+      <a class="btn btn-primary" href="STOREFRONT_URL">Download</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <span class="eyebrow">Offline interpreter's assistant</span>
+      <h1>English and Chinese, transcribed and translated as you listen.</h1>
+      <p class="lead">Rexicon runs speech recognition and translation on your own computer. After model setup, you can use it without an account or internet connection.</p>
+
+      <div class="cta-row">
+        <a class="btn btn-primary" href="STOREFRONT_URL">Download</a>
+        <a class="btn btn-ghost" href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md">Read the README</a>
+      </div>
+
+      <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; local models &nbsp;·&nbsp; no cloud API required</p>
+    </div>
+
+    <!-- Prepared example text, not a recording or a model-performance demo. -->
+    <div class="panel" role="img" aria-label="Illustrative paired transcript using prepared English and Chinese text. This is not live model output.">
+      <div class="panel-top">
+        <div class="status">
+          <span class="live-dot"></span>
+          <span id="statusText">Example · Listening…</span>
+        </div>
+
+        <div class="panel-right">
+          <span class="pair-label">EN → 中文</span>
+          <div class="meter"><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+
+      <div class="transcript" id="transcript">
+        <div class="entry shown">
+          <div class="entry-meta"><span class="dot" style="background:var(--en)"></span>09:14:02</div>
+          <div class="entry-cols">
+            <div class="entry-src">We choose to go to the Moon in this decade.</div>
+            <div class="entry-tgt" lang="zh-Hans">我们决定在这十年内登上月球。</div>
+          </div>
+        </div>
+
+        <div class="entry shown">
+          <div class="entry-meta"><span class="dot" style="background:var(--en)"></span>09:14:09</div>
+          <div class="entry-cols">
+            <div class="entry-src">Not because it is easy, but because it is hard.</div>
+            <div class="entry-tgt" lang="zh-Hans">不是因为它容易，而是因为它艰难。</div>
+          </div>
+        </div>
+
+        <div class="entry shown">
+          <div class="entry-meta"><span class="dot" style="background:var(--en)"></span>09:14:16</div>
+          <div class="entry-cols">
+            <div class="entry-src">That challenge is one we are willing to accept.</div>
+            <div class="entry-tgt" lang="zh-Hans">这是我们愿意接受的挑战。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <span class="eyebrow">Why it's built this way</span>
+
+    <div class="grid-3">
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+        </span>
+        <div class="card-title">Local processing</div>
+        <p class="card-body">Rexicon processes audio on your computer rather than sending it to a transcription service. It saves transcripts locally and does not save microphone audio.</p>
+      </div>
+
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M17.5 18.5h-9a4.5 4.5 0 0 1-1.6-8.7A6 6 0 0 1 18.4 11"/><line x1="4" y1="4" x2="20" y2="20"/></svg>
+        </span>
+        <div class="card-title">Offline after setup</div>
+        <p class="card-body">Download the required models before your session. Once they are installed, transcription and translation do not need an internet connection.</p>
+      </div>
+
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 12.5 12.5 20 4 11.5V4h7.5L20 12.5Z"/><circle cx="8.6" cy="8.6" r="1.3"/></svg>
+        </span>
+        <div class="card-title">No per-minute metering</div>
+        <p class="card-body">Local transcription and translation do not use API credits. Processing speed depends on your computer, the selected models, and the recording.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="features">
+    <span class="eyebrow">What it does</span>
+
+    <div class="grid-2">
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 5h11a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><line x1="6" y1="8.5" x2="13" y2="8.5"/></svg>
+        </span>
+        <div class="card-title">Paired text, live</div>
+        <p class="card-body">Read the source on the left and its translation on the right. Live transcription previews can change; translation follows finalized phrases. Choose English or Chinese before starting a session.</p>
+      </div>
+
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="13" y2="16.5"/></svg>
+        </span>
+        <div class="card-title">Recorded files too</div>
+        <p class="card-body">Open a wav, mp3, m4a, flac, or ogg recording. Results appear as it is processed. At the end, Rexicon also writes a text transcript beside the recording when that folder is writable.</p>
+      </div>
+
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg>
+        </span>
+        <div class="card-title">Your terms and transcripts</div>
+        <p class="card-body">Type, paste, or import a glossary for recognition hints and terminology checks. Export transcripts as text or JSON. Session journals are saved locally as results arrive.</p>
+      </div>
+
+      <div>
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><line x1="12" y1="17" x2="12" y2="20"/><line x1="9" y1="20" x2="15" y2="20"/></svg>
+        </span>
+        <div class="card-title">Choose the audio input</div>
+        <p class="card-body">Select an available microphone or configured audio input. To avoid capturing your own interpreting, use a separate speaker feed; the input picker does not identify or remove individual voices.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="how">
+    <div class="how-head">
+      <span class="eyebrow">How it works</span>
+      <h2>From speech to paired text.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Listen</h3>
+        <p>Choose the source language and input. Rexicon detects speech and buffers the audio while the speaker continues.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Preview and finalize</h3>
+        <p>Live previews appear during longer phrases. Pauses usually close a phrase; continuous speech is split when it reaches the window limit.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Translate and review</h3>
+        <p>The finalized source is paired with its translation. Warnings identify some uncertain results and terminology that may need checking.</p>
+      </div>
+    </div>
+
+    <p class="note">There is <b>no fixed latency guarantee</b>. Delay includes waiting for a phrase boundary, queued work, recognition, and translation. Try a representative recording on your computer before using Rexicon for an assignment.</p>
+  </section>
+
+  <section class="wrap section">
+    <div class="split">
+      <div>
+        <span class="eyebrow">Privacy</span>
+        <h2>Local processing, local transcripts.</h2>
+      </div>
+
+      <div>
+        <p>Setup downloads the speech, speech-detection, and translation models. Normal desktop use loads those local files and does not require a cloud service. Download size depends on the models you choose.</p>
+        <p>Session journals can contain previews, final text, and review notes. Clearing the window does not delete those files. Your computer’s backups, synced folders, and access permissions still matter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="callout split">
+      <div>
+        <span class="eyebrow">What to expect</span>
+        <h2>It will make mistakes.</h2>
+      </div>
+
+      <div>
+        <p>Rexicon is an experimental assistant for English and Mandarin speech, with Chinese text displayed in simplified characters. It can mishear names, numbers, accents, overlapping speakers, and unfamiliar terminology.</p>
+        <p>Translation can omit details or change meaning even when no warning appears. A glossary is a reference, not a guarantee. Check the text against the speaker; do not treat it as a verified record or a replacement for an interpreter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="download">
+    <span class="eyebrow" style="text-align:center;">Download</span>
+
+    <div class="price-card">
+      <div class="price-big">Set up, then work offline.</div>
+      <p class="price-sub">Install Rexicon and its models before your session. The README covers source setup, local storage, and known limitations. Check the requirements of the build you download.</p>
+
+      <!-- Replace with the actual release or checkout URL when available. -->
+      <a class="btn btn-primary" href="STOREFRONT_URL">Download Rexicon</a>
+
+      <p class="price-reqs">Source setup: Python 3.12 · macOS / Windows (64-bit)<br>CPU mode · optional MLX on Apple Silicon<br>Model storage and memory needs vary by configuration</p>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="alt-head">
+      <span class="eyebrow">Is it right for you?</span>
+      <h2>Other tools may fit better.</h2>
+    </div>
+
+    <div class="alt-list">
+      <div class="alt-row">
+        <div class="alt-q">Already have the text you need to translate?</div>
+        <div class="alt-a"><b>Google Translate</b> or <b>DeepL</b></div>
+      </div>
+
+      <div class="alt-row">
+        <div class="alt-q">Mainly working with recordings or subtitles?</div>
+        <div class="alt-a"><b>Buzz</b> or <b>MacWhisper</b></div>
+      </div>
+
+      <div class="alt-row">
+        <div class="alt-q">Need a broader terminology and preparation toolkit?</div>
+        <div class="alt-a"><b>InterpretBank</b> or another CAI tool</div>
+      </div>
+    </div>
+
+    <p class="alt-foot">Rexicon focuses on paired English–Chinese text during interpreting. The README links to alternatives and explains which features run locally and which may use cloud services. <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md#other-tools">Compare the options →</a></p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-note">I'm a PhD student in statistics. I built Rexicon for interpreter friends who wanted English–Chinese transcription and translation without sending session audio to a cloud service. <span>It is still a work in progress. I hope you find it useful.</span><br><span class="foot-sign">Trevor</span></p>
+
+    <div class="foot-bar">
+      <a class="brand" href="#top" style="font-size:1.2rem;">
+        <img class="brand-logo" src="assets/rexicon-logo-x4.png" alt="" style="height:24px;">
+        Rexicon
+      </a>
+
+      <div class="foot-links">
+        <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md">GitHub</a>
+        <!-- Replace SUPPORT_EMAIL before publishing contact details. -->
+        <a href="mailto:SUPPORT_EMAIL">Support</a>
+        <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md#credits">Credits</a>
+      </div>
+    </div>
+
+    <p class="credits">Built with OpenAI Whisper, faster-whisper, CTranslate2, MLX Whisper, Silero VAD, Helsinki-NLP OPUS-MT, OpenCC, and CustomTkinter. Thanks to the people who maintain these projects. Model and software licenses are listed through the README’s upstream references.</p>
+    <p class="credits">The animated transcript uses prepared example text, not live model output. This website loads fonts from Google Fonts; the desktop app uses installed fonts.</p>
+    <p class="copy">© 2026 · Rexicon</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var root = document.documentElement;
+  var btn = document.getElementById('themeBtn');
+
+  btn.addEventListener('click', function(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    btn.textContent = dark ? '☾' : '☀';
+    btn.setAttribute('aria-pressed', String(!dark));
+    btn.setAttribute('aria-label', dark ? 'Switch to dark mode' : 'Switch to light mode');
+  });
+
+  var box = document.getElementById('transcript');
+  var statusEl = document.getElementById('statusText');
+  var reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var ENTRIES = [
+    {lang:'en', src:'We choose to go to the Moon in this decade.',          tgt:'我们决定在这十年内登上月球。'},
+    {lang:'en', src:'Not because it is easy, but because it is hard.',      tgt:'不是因为它容易，而是因为它艰难。'},
+    {lang:'en', src:'That challenge is one we are willing to accept.',      tgt:'这是我们愿意接受的挑战。'},
+    {lang:'en', src:'One we are unwilling to postpone, and intend to win.', tgt:'我们不愿推迟，并决心赢得它。'},
+    {lang:'en', src:'The eyes of the world now look into space.',           tgt:'如今，全世界的目光都投向太空。'}
+  ];
+
+  var clock = 9 * 3600 + 14 * 60;
+
+  function stamp(){
+    var h = Math.floor(clock / 3600) % 24;
+    var m = Math.floor((clock % 3600) / 60);
+    var s = clock % 60;
+    function p(n){ return (n < 10 ? '0' : '') + n; }
+    return p(h) + ':' + p(m) + ':' + p(s);
+  }
+
+  function makeEntry(e, t){
+    var wrap = document.createElement('div');
+    wrap.className = 'entry';
+
+    var hue = e.lang === 'zh' ? 'var(--zh)' : 'var(--en)';
+
+    wrap.innerHTML =
+      '<div class="entry-meta"><span class="dot" style="background:' + hue +
+      '"></span>' + t + '</div>' +
+      '<div class="entry-cols"><div class="entry-src"></div>' +
+      '<div class="entry-tgt"></div></div>';
+
+    var source = wrap.querySelector('.entry-src');
+    var target = wrap.querySelector('.entry-tgt');
+
+    source.textContent = e.src;
+    target.textContent = e.tgt;
+    source.setAttribute('lang', e.lang === 'zh' ? 'zh-Hans' : 'en');
+    target.setAttribute('lang', e.lang === 'zh' ? 'en' : 'zh-Hans');
+
+    return wrap;
+  }
+
+  function trim(){
+    while (box.children.length > 4){
+      box.removeChild(box.firstElementChild);
+    }
+  }
+
+  box.innerHTML = '';
+
+  if (reduce){
+    statusEl.textContent = 'Example transcript';
+
+    for (var i = 0; i < 3; i++){
+      clock += 6;
+      var node = makeEntry(ENTRIES[i], stamp());
+      node.classList.add('shown');
+      box.appendChild(node);
+    }
+
+    return;
+  }
+
+  var idx = 0;
+
+  function add(){
+    clock += 4 + Math.floor(Math.random() * 6);
+    var node = makeEntry(ENTRIES[idx % ENTRIES.length], stamp());
+    box.appendChild(node);
+
+    requestAnimationFrame(function(){
+      node.classList.add('shown');
+    });
+
+    idx++;
+    trim();
+  }
+
+  add();
+  add();
+
+  function loop(){
+    statusEl.textContent = 'Example · Listening…';
+
+    setTimeout(function(){
+      statusEl.textContent = 'Example · Speech';
+    }, 1200);
+
+    setTimeout(function(){
+      add();
+      statusEl.textContent = 'Example · Listening…';
+    }, 2000);
+
+    setTimeout(loop, 3000);
+  }
+
+  setTimeout(loop, 2200);
+})();
+</script>
+</body>
+</html>
