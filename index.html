@@ -349,7 +349,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
           <svg viewBox="0 0 24 24"><path d="M20 12.5 12.5 20 4 11.5V4h7.5L20 12.5Z"/><circle cx="8.6" cy="8.6" r="1.3"/></svg>
         </span>
         <div class="card-title">No per-minute metering</div>
-        <p class="card-body">Local transcription and translation do not use API credits. Processing speed depends on your computer, the selected models, and the recording.</p>
+                <p class="card-body">Everything runs locally, so there are no API credits or per-minute charges. Run as many sessions as you like.</p>
       </div>
     </div>
   </section>
@@ -387,7 +387,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
           <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0"/><line x1="12" y1="17" x2="12" y2="20"/><line x1="9" y1="20" x2="15" y2="20"/></svg>
         </span>
         <div class="card-title">Choose the audio input</div>
-        <p class="card-body">Select an available microphone or configured audio input. To avoid capturing your own interpreting, use a separate speaker feed; the input picker does not identify or remove individual voices.</p>
+                <p class="card-body">Choose any microphone or audio input. For the cleanest transcript, give Rexicon the speaker's own feed, so it hears them rather than your interpreting.</p>
       </div>
     </div>
   </section>
@@ -418,7 +418,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </div>
     </div>
 
-    <p class="note">There is <b>no fixed latency guarantee</b>. Delay includes waiting for a phrase boundary, queued work, recognition, and translation. Try a representative recording on your computer before using Rexicon for an assignment.</p>
+    <p class="note">A lot of the work behind Rexicon went into <b>keeping up with a live speaker</b>. It only processes real speech, so silence never slows it down. Transcription and translation run side by side, and on Apple Silicon Macs, speech recognition runs on the built-in graphics chip for extra speed. During long sentences, a live preview appears before the speaker even pauses.</p>
   </section>
 
   <section class="wrap section">
@@ -429,8 +429,8 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </div>
 
       <div>
-        <p>Setup downloads the speech, speech-detection, and translation models. Normal desktop use loads those local files and does not require a cloud service. Download size depends on the models you choose.</p>
-        <p>Session journals can contain previews, final text, and review notes. Clearing the window does not delete those files. Your computer’s backups, synced folders, and access permissions still matter.</p>
+                <p>Rexicon downloads its speech and translation models once, during setup. After that, everything runs on your own computer, with no cloud service, no account, and no internet connection needed. Your audio stays on your computer and is never saved.</p>
+        <p>Transcripts save automatically as you work, so clearing the screen doesn't erase them. They're ordinary files on your computer, and you decide what to keep or delete.</p>
       </div>
     </div>
   </section>
@@ -439,12 +439,12 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     <div class="callout split">
       <div>
         <span class="eyebrow">What to expect</span>
-        <h2>It will make mistakes.</h2>
+        <h2>A second pair of ears.</h2>
       </div>
 
       <div>
-        <p>Rexicon is an experimental assistant for English and Mandarin speech, with Chinese text displayed in simplified characters. It can mishear names, numbers, accents, overlapping speakers, and unfamiliar terminology.</p>
-        <p>Translation can omit details or change meaning even when no warning appears. A glossary is a reference, not a guarantee. Check the text against the speaker; do not treat it as a verified record or a replacement for an interpreter.</p>
+        <p>Rexicon keeps a running record of what was said, with a translation beside it, so you can glance back to confirm a number, a name, or a phrase. It works with English and Mandarin speech and shows Chinese in simplified characters.</p>
+        <p>Like any speech tool, it isn't perfect. Fast speech, strong accents, crosstalk, and specialized terms can trip it up, and machine translation won't always catch tone or nuance. It's there to support your judgment, not to replace it.</p>
       </div>
     </div>
   </section>
@@ -454,19 +454,19 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
     <div class="price-card">
       <div class="price-big">Set up, then work offline.</div>
-      <p class="price-sub">Install Rexicon and its models before your session. The README covers source setup, local storage, and known limitations. Check the requirements of the build you download.</p>
+            <p class="price-sub">Rexicon is avaliable! Download it and its models once while you're online, and it works anywhere after that, even with no connection. Plan on about 3 GB of disk space, mostly for the speech model.</p>
 
       <!-- Replace with the actual release or checkout URL when available. -->
       <a class="btn btn-primary" href="STOREFRONT_URL">Download Rexicon</a>
 
-      <p class="price-reqs">Source setup: Python 3.12 · macOS / Windows (64-bit)<br>CPU mode · optional MLX on Apple Silicon<br>Model storage and memory needs vary by configuration</p>
+            <p class="price-reqs">macOS (Apple Silicon) · Windows 10 / 11 (Intel or AMD)<br>Internet needed once, for setup</p>
     </div>
   </section>
 
   <section class="wrap section">
     <div class="alt-head">
       <span class="eyebrow">Is it right for you?</span>
-      <h2>Other tools may fit better.</h2>
+      <h2>Other tools worth knowing.</h2>
     </div>
 
     <div class="alt-list">
@@ -493,7 +493,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
 <footer>
   <div class="wrap">
-    <p class="foot-note">I'm a PhD student in statistics. I built Rexicon for interpreter friends who wanted English–Chinese transcription and translation without sending session audio to a cloud service. <span>It is still a work in progress. I hope you find it useful.</span><br><span class="foot-sign">Trevor</span></p>
+    <p class="foot-note">I'm a PhD student in statistics. I built Rexicon for interpreter friends who wanted English–Chinese transcription and translation without sending session audio to a cloud service. <span>I'm still improving it, and I hope you find it helpful.</span><br><span class="foot-sign">Trevor</span></p>
 
     <div class="foot-bar">
       <a class="brand" href="#top" style="font-size:1.2rem;">
@@ -510,7 +510,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     </div>
 
     <p class="credits">Built with OpenAI Whisper, faster-whisper, CTranslate2, MLX Whisper, Silero VAD, Helsinki-NLP OPUS-MT, OpenCC, and CustomTkinter. Thanks to the people who maintain these projects. Model and software licenses are listed through the README’s upstream references.</p>
-    <p class="credits">The animated transcript uses prepared example text, not live model output. This website loads fonts from Google Fonts; the desktop app uses installed fonts.</p>
+    <p class="credits">The animated transcript uses prepared example text, not live model output.</p>
     <p class="copy">© 2026 · Rexicon</p>
   </div>
 </footer>
