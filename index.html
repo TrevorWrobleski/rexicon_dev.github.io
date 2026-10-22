@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rexicon, offline transcription and translation for English &amp; Chinese</title>
-<meta name="description" content="An offline transcription and translation assistant for English–Chinese interpreters. Paired text, glossary references, and local processing after model setup.">
+<title>Rexicon (beta): offline English &amp; Chinese live transcription for interpreters</title>
+<meta name="description" content="A live English and Mandarin transcript on your own Mac or PC. Audio never leaves your computer. Optional gist translation (beta). $39 beta price, one-time.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Rexicon, offline English &amp; Chinese transcription and translation">
-<meta property="og:description" content="An interpreter's assistant with paired transcripts, glossary references, and local processing after model setup.">
+<meta property="og:title" content="Rexicon (beta): offline English &amp; Chinese live transcription">
+<meta property="og:description" content="An interpreter's assistant: a live English and Mandarin transcript on your own computer, with optional gist translation (beta). One-time price.">
 
 <link rel="icon" type="image/png" href="assets/rexicon-logo-x4.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,8 +184,20 @@ header{
 }
 .price-big{font-family:var(--serif); font-size:clamp(2.4rem,5vw,3.2rem); line-height:1; margin:.2rem 0 0;}
 .price-sub{color:var(--taupe); margin:1.1rem auto 0; max-width:44ch; line-height:1.6;}
+.price-tag{display:inline-block; font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--taupe); border:1px solid currentColor; border-radius:999px; padding:.2rem .6rem; margin-bottom:.8rem;}
+.price-list{list-style:none; padding:0; margin:1.2rem auto 1.4rem; max-width:44ch; text-align:left; line-height:1.7; color:var(--taupe);}
+.price-list li::before{content:"✓  "; color:var(--ink);}
 .price-card .btn{margin-top:1.8rem;}
 .price-reqs{font-family:var(--mono); font-size:.72rem; color:var(--taupe); margin-top:1.5rem; line-height:1.7; letter-spacing:.01em;}
+.limits{margin:.6rem 0 0; padding-left:1.1rem; line-height:1.65; color:var(--taupe);}
+.limits li{margin:.35rem 0;}
+.limits b{color:var(--ink); font-weight:500;}
+#faq h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.12; margin-top:.2rem;}
+.faq{max-width:62ch; margin-top:clamp(20px,3vw,32px);}
+.faq details{border-top:1px solid var(--border); padding:.9rem 0;}
+.faq details:last-child{border-bottom:1px solid var(--border);}
+.faq summary{cursor:pointer; font-weight:500; color:var(--ink); list-style-position:outside;}
+.faq p{color:var(--taupe); line-height:1.65; margin:.6rem 0 0;}
 
 .alt-head{max-width:34ch; margin-bottom:clamp(30px,4vw,44px);}
 .alt-head h2{font-size:clamp(1.7rem,3vw,2.4rem); line-height:1.12; margin-top:.2rem;}
@@ -256,6 +268,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <a href="#features">What it does</a>
       <a href="#how">How it works</a>
       <a href="#download">Download</a>
+      <a href="#faq">FAQ</a>
     </nav>
 
     <div class="nav-right">
@@ -270,16 +283,16 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
   <section class="wrap hero">
     <div class="hero-copy">
-      <span class="eyebrow">Offline interpreter's assistant</span>
-      <h1>English and Chinese, transcribed and translated as you listen.</h1>
-      <p class="lead">Rexicon runs speech recognition and translation on your own computer. After model setup, you can use it without an account or internet connection.</p>
+      <span class="eyebrow">Public beta · Offline interpreter's assistant</span>
+      <h1>English and Chinese, transcribed live on your own computer.</h1>
+      <p class="lead">Rexicon writes down English and Mandarin as they're spoken, so you can glance back at a number, a name or a term. Everything runs on your computer: no cloud, no account, no per-minute meter. Need a rough sense of meaning? Switch on gist translation (beta) at any time.</p>
 
       <div class="cta-row">
         <a class="btn btn-primary" href="STOREFRONT_URL">Download</a>
         <a class="btn btn-ghost" href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md">Read the README</a>
       </div>
 
-      <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; local models &nbsp;·&nbsp; no cloud API required</p>
+      <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; works offline after setup &nbsp;·&nbsp; beta price $39, one-time</p>
     </div>
 
     <!-- Prepared example text, not a recording or a model-performance demo. -->
@@ -291,7 +304,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
         </div>
 
         <div class="panel-right">
-          <span class="pair-label">EN → 中文</span>
+          <span class="pair-label">EN → 中文 · gist (beta)</span>
           <div class="meter"><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
@@ -362,8 +375,8 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
         <span class="ico" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M4 5h11a2 2 0 0 1 2 2v3.5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><line x1="6" y1="8.5" x2="13" y2="8.5"/></svg>
         </span>
-        <div class="card-title">Paired text, live</div>
-        <p class="card-body">Read the source on the left and its translation on the right. Live transcription previews can change; translation follows finalized phrases. Choose English or Chinese before starting a session.</p>
+        <div class="card-title">A live transcript, in both languages</div>
+        <p class="card-body">English and Mandarin appear as text while the speaker talks. Rough previews show during long phrases, then each phrase settles into final text. If the speaker changes language, click English or 中文 at any time during the session. Chinese is shown in simplified characters. Want a rough sense of meaning too? Turn on gist translation (beta) and it appears beside the text.</p>
       </div>
 
       <div>
@@ -379,7 +392,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
           <svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="m8 11 4 4 4-4"/><path d="M5 19h14"/></svg>
         </span>
         <div class="card-title">Your terms and transcripts</div>
-        <p class="card-body">Type, paste, or import a glossary for recognition hints and terminology checks. Export transcripts as text or JSON. Session journals are saved locally as results arrive.</p>
+        <p class="card-body">Type, paste, or import a glossary for recognition hints and terminology checks. Export transcripts as text or JSON. Your transcript saves automatically as you go, on your own computer.</p>
       </div>
 
       <div>
@@ -402,7 +415,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <div class="step">
         <div class="step-num">01</div>
         <h3>Listen</h3>
-        <p>Choose the source language and input. Rexicon detects speech and buffers the audio while the speaker continues.</p>
+        <p>Choose your audio input and the speaker's language, then press Start. If the speaker switches language, click English or 中文 at any time. Rexicon listens for speech and keeps up while the speaker continues.</p>
       </div>
 
       <div class="step">
@@ -413,12 +426,13 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Translate and review</h3>
-        <p>The finalized source is paired with its translation. Warnings identify some uncertain results and terminology that may need checking.</p>
+        <h3>Glance, then review</h3>
+        <p>Each phrase settles into final text. Warnings flag some uncertain results and glossary terms to check. With gist translation (beta) switched on, a rough translation appears beside each phrase.</p>
       </div>
     </div>
 
     <p class="note">A lot of the work behind Rexicon went into <b>keeping up with a live speaker</b>. It only processes real speech, so silence never slows it down. Transcription and translation run side by side, and on Apple Silicon Macs, speech recognition runs on the built-in graphics chip for extra speed. During long sentences, a live preview appears before the speaker even pauses.</p>
+    <p class="note"><b>About the beta.</b> Live transcription is the core of Rexicon. Gist translation is in beta: it's off by default, and you can switch it on or off at any time, even mid-session. It gives a rough sense of meaning, can miss tone and nuance, and can add or drop words. Use it as a hint, never for wording.</p>
   </section>
 
   <section class="wrap section">
@@ -435,7 +449,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     </div>
   </section>
 
-  <section class="wrap section">
+  <section class="wrap section" id="limits">
     <div class="callout split">
       <div>
         <span class="eyebrow">What to expect</span>
@@ -444,7 +458,18 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
       <div>
         <p>Rexicon keeps a running record of what was said, with a translation beside it, so you can glance back to confirm a number, a name, or a phrase. It works with English and Mandarin speech and shows Chinese in simplified characters.</p>
-        <p>Like any speech tool, it isn't perfect. Fast speech, strong accents, crosstalk, and specialized terms can trip it up, and machine translation won't always catch tone or nuance. It's there to support your judgment, not to replace it.</p>
+        <p>Like any speech tool, it makes mistakes. Fast speech, strong accents, crosstalk, and specialized terms can trip it up. It's there to support your judgment, not to replace it.</p>
+        <p><b>What Rexicon isn't:</b></p>
+        <ul class="limits">
+          <li><b>Not an interpreter,</b> and not a replacement for one. It's an assistant for checking what you heard.</li>
+          <li><b>Not a verbatim or certified record.</b> Check anything important against the source.</li>
+          <li><b>Not an accurate translator.</b> Gist translation (beta) gives a rough sense of meaning, can miss tone and nuance, and can add or drop words. It's off by default.</li>
+          <li><b>Not automatic about language.</b> You choose English or 中文, and click to switch when the speaker changes language.</li>
+          <li><b>No speaker labels.</b> It doesn't mark who said what.</li>
+          <li><b>English and Mandarin only.</b></li>
+          <li><b>Windows PCs use a smaller speech model,</b> run on the processor, so results can arrive later and contain more errors than on an Apple Silicon Mac.</li>
+          <li><b>Doesn't capture your computer's own sound by itself.</b> It listens to a microphone or another audio input you choose.</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -453,13 +478,68 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
     <span class="eyebrow" style="text-align:center;">Download</span>
 
     <div class="price-card">
-      <div class="price-big">Set up, then work offline.</div>
-            <p class="price-sub">Rexicon is available! Download it and its models once while you're online, and it works anywhere after that, even with no connection. Plan on about 3 GB of disk space, mostly for the speech model.</p>
+      <span class="price-tag">Public beta</span>
+      <div class="price-big">$39, once.</div>
+      <p class="price-sub"><b>Beta price $39. It goes up to $49 when Rexicon leaves beta.</b> One purchase, no subscription and no usage limits: run as many sessions, for as long as you like.</p>
+
+      <ul class="price-list">
+        <li>One-time purchase, no subscription</li>
+        <li>No minute limits, no credits, no account</li>
+        <li>Works offline after a one-time download (about 3 GB, mostly the speech model)</li>
+        <li>Live transcription in English and Mandarin</li>
+        <li>Gist translation (beta), off by default, switch on any time</li>
+      </ul>
 
       <!-- Replace with the actual release or checkout URL when available. -->
-      <a class="btn btn-primary" href="STOREFRONT_URL">Download Rexicon</a>
+      <a class="btn btn-primary" href="STOREFRONT_URL">Get the beta, $39</a>
 
-            <p class="price-reqs">macOS (Apple Silicon) · Windows 10 / 11 (Intel or AMD)<br>Internet needed once, for setup</p>
+      <p class="price-reqs">macOS (Apple Silicon) · Windows 10 / 11 (Intel or AMD)<br>Internet needed once, for setup · <a href="#faq">Questions? See the FAQ</a></p>
+    </div>
+  </section>
+
+  <section class="wrap section" id="faq">
+    <span class="eyebrow">Questions</span>
+    <h2>Frequently asked.</h2>
+
+    <div class="faq">
+      <details><summary>Does it work without internet?</summary>
+        <p>Yes. Download Rexicon and its models once while you're online (about 3 GB of disk space). After that, transcription and translation run with no connection.</p></details>
+
+      <details><summary>Is my audio recorded or uploaded?</summary>
+        <p>No. Audio is processed on your computer and is never saved or sent anywhere. Your transcript saves automatically as you go, on your own computer. Only text is kept, as ordinary files on your computer that you can delete whenever you like.</p></details>
+
+      <details><summary>Can it replace an interpreter?</summary>
+        <p>No. Rexicon is an assistant. It gives you a running transcript so you can check a number, a name or a term. The interpreting, and the judgment, stay with you.</p></details>
+
+      <details><summary>How accurate is it?</summary>
+        <p>We haven't published measured accuracy yet, so we don't quote a number. Results depend heavily on the audio: a clear, direct feed of the speaker helps, while crosstalk, strong accents, fast speech and specialist terms cause more errors. The best test is your own material.</p></details>
+
+      <details><summary>Which languages does it support?</summary>
+        <p>English and Mandarin. Chinese is shown in simplified characters.</p></details>
+
+      <details><summary>Does it detect the language automatically?</summary>
+        <p>No. You choose English or 中文, and when the speaker switches, you click the other one. That works at any time during a session, mid-speech too.</p></details>
+
+      <details><summary>Why is translation in beta, and why is it off by default?</summary>
+        <p>Transcription is the part of Rexicon we're confident is ready. Translation is a gist: it gives a rough sense of meaning, can miss tone and nuance, and can add or drop words. So it's off by default, and labeled beta. Switch it on or off at any time, even mid-session. The transcript marks when you did.</p></details>
+
+      <details><summary>Does it filter or soften what people say?</summary>
+        <p>No. Rexicon writes down what it hears, with no content filters.</p></details>
+
+      <details><summary>Can it transcribe recordings?</summary>
+        <p>Yes. Open a wav, mp3, m4a, flac, ogg or aac file.</p></details>
+
+      <details><summary>What does the beta price include, and what happens when Rexicon leaves beta?</summary>
+        <p>During the beta, Rexicon costs $39, once. When it leaves beta, the price goes up to $49 for new buyers. If you buy during the beta, you don't pay again: the copy you bought is yours to keep, and you get version 1.0 at no extra charge.</p></details>
+
+      <details><summary>Is it a subscription? Are there usage limits?</summary>
+        <p>No and no. You pay once. There's no subscription, no account, no credits and no minute limits.</p></details>
+
+      <details><summary>Why does my computer warn me when I open it?</summary>
+        <p>The beta isn't signed with Apple or Microsoft yet. On a Mac, when macOS says it can't verify the developer, click Done, then open System Settings → Privacy &amp; Security and click Open Anyway. On Windows, click More info → Run anyway. After an update, your Mac may ask for microphone permission again.</p></details>
+
+      <details><summary>Who makes it, and how do I get help?</summary>
+        <p>Rexicon is made by Trevor Wrobleski. For help, email <a href="mailto:SUPPORT_EMAIL">SUPPORT_EMAIL</a>.</p></details>
     </div>
   </section>
 
