@@ -189,6 +189,11 @@ header{
 .price-list li::before{content:"✓  "; color:var(--ink);}
 .price-card .btn{margin-top:1.8rem;}
 .price-reqs{font-family:var(--mono); font-size:.72rem; color:var(--taupe); margin-top:1.5rem; line-height:1.7; letter-spacing:.01em;}
+.reqs{margin:1.5rem auto 0; max-width:46ch; text-align:left; color:var(--taupe); line-height:1.6; font-size:.95rem;}
+.reqs p + p{margin-top:.75rem;}
+.reqs b{color:var(--ink); font-weight:600;}
+.reqs a{color:var(--sage); font-weight:600; text-decoration:none; border-bottom:1px solid color-mix(in srgb, var(--sage) 40%, transparent);}
+.reqs a:hover{border-bottom-color:var(--sage);}
 .limits{margin:.6rem 0 0; padding-left:1.1rem; line-height:1.65; color:var(--taupe);}
 .limits li{margin:.35rem 0;}
 .limits b{color:var(--ink); font-weight:500;}
@@ -289,7 +294,6 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
       <div class="cta-row">
         <a class="btn btn-primary" href="STOREFRONT_URL">Download</a>
-        <a class="btn btn-ghost" href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md">Read the README</a>
       </div>
 
       <p class="hero-meta"><b>macOS · Windows</b> &nbsp;·&nbsp; works offline after setup &nbsp;·&nbsp; beta price $39, one-time</p>
@@ -492,7 +496,12 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       <!-- Replace with the actual release or checkout URL when available. -->
       <a class="btn btn-primary" href="STOREFRONT_URL">Get the beta, $39</a>
 
-      <p class="price-reqs">macOS (Apple Silicon) · Windows 10 / 11 (Intel or AMD)<br>Internet needed once, for setup · <a href="#faq">Questions? See the FAQ</a></p>
+      <div class="reqs">
+        <p><b>Mac.</b> Apple Silicon (M1 or later). Speech recognition runs on the graphics chip, using Whisper large-v3-turbo. That model is about 1.6 GB of the download.</p>
+        <p><b>Windows.</b> Windows 10 or 11, 64-bit, Intel or AMD. Speech recognition runs on the processor, using the smaller Whisper medium model. That model is about 1.5 GB of the download.</p>
+        <p><b>Both.</b> About 3 GB of free disk space. Internet only for the first download. A microphone, or another audio input that carries the speaker.</p>
+        <p><a href="#faq">Questions? See the FAQ</a></p>
+      </div>
     </div>
   </section>
 
@@ -565,7 +574,7 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </div>
     </div>
 
-    <p class="alt-foot">Rexicon focuses on paired English–Chinese text during interpreting. The README links to alternatives and explains which features run locally and which may use cloud services. <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md#other-tools">Compare the options →</a></p>
+    <p class="alt-foot">Rexicon focuses on paired English–Chinese text during interpreting.</p>
   </section>
 
 </main>
@@ -581,14 +590,12 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
       </a>
 
       <div class="foot-links">
-        <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md">GitHub</a>
         <!-- Replace SUPPORT_EMAIL before publishing contact details. -->
         <a href="mailto:SUPPORT_EMAIL">Support</a>
-        <a href="https://github.com/TrevorWrobleski/Rexicon_Dev/blob/main/README.md#credits">Credits</a>
       </div>
     </div>
 
-    <p class="credits">Built with OpenAI Whisper, faster-whisper, CTranslate2, MLX Whisper, Silero VAD, Helsinki-NLP OPUS-MT, OpenCC, and CustomTkinter. Thanks to the people who maintain these projects. Model and software licenses are listed through the README’s upstream references.</p>
+    <p class="credits">Built with OpenAI Whisper, faster-whisper, CTranslate2, MLX Whisper, Silero VAD, OpenCC, and CustomTkinter. Translation uses Helsinki-NLP OPUS-MT, from the University of Helsinki: opus-mt-en-zh under Apache 2.0, and opus-mt-zh-en under CC BY 4.0. Thanks to the people who maintain these projects.</p>
     <p class="credits">The animated transcript uses prepared example text, not live model output.</p>
     <p class="copy">© 2026 · Rexicon</p>
   </div>
