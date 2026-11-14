@@ -189,7 +189,7 @@ header{
 .price-list li::before{content:"✓  "; color:var(--ink);}
 .price-card .btn{margin-top:1.8rem;}
 .price-reqs{font-family:var(--mono); font-size:.72rem; color:var(--taupe); margin-top:1.5rem; line-height:1.7; letter-spacing:.01em;}
-.reqs{margin:1.5rem auto 0; max-width:46ch; text-align:left; color:var(--taupe); line-height:1.6; font-size:.95rem;}
+.reqs{margin:clamp(28px,4vw,44px) auto 0; max-width:46ch; text-align:left; color:var(--taupe); line-height:1.6; font-size:.95rem;}
 .reqs p + p{margin-top:.75rem;}
 .reqs b{color:var(--ink); font-weight:600;}
 .reqs a{color:var(--sage); font-weight:600; text-decoration:none; border-bottom:1px solid color-mix(in srgb, var(--sage) 40%, transparent);}
@@ -491,14 +491,14 @@ footer{border-top:1px solid var(--border); padding-block:clamp(52px,7vw,84px);}
 
       <!-- Replace with the actual release or checkout URL when available. -->
       <a class="btn btn-primary" href="STOREFRONT_URL">Get the beta, $39</a>
+    </div>
 
-      <div class="reqs">
-        <p><b>Mac.</b> Apple Silicon (M1 or later). Speech recognition runs on the graphics chip, using Whisper large-v3-turbo. That model is about 1.6 GB of the download.</p>
-        <p><b>Windows, with an NVIDIA card.</b> Windows 10 or 11, 64-bit, plus the GPU add-on. Speech recognition runs on the graphics card, using the same Whisper large-v3-turbo model. That model is about 1.6 GB of the download.</p>
-        <p><b>Other Windows PCs.</b> Windows 10 or 11, 64-bit, Intel or AMD. Speech recognition runs on the processor, using the smaller Whisper medium model. That model is about 1.5 GB of the download. The transcript can arrive later and miss more.</p>
-        <p><b>Every computer.</b> About 3 GB of free disk space. Internet only for the first download. A microphone, or another audio input that carries the speaker.</p>
-        <p><a href="#faq">Questions? See the FAQ</a></p>
-      </div>
+    <div class="reqs">
+      <p><b>Mac.</b> Apple Silicon (M1 or later). Speech recognition runs on the graphics chip, using Whisper large-v3-turbo. That model is about 1.6 GB of the download.</p>
+      <p><b>Windows, with an NVIDIA card.</b> Windows 10 or 11, 64-bit, plus the GPU add-on. Speech recognition runs on the graphics card, using the same Whisper large-v3-turbo model. That model is about 1.6 GB of the download.</p>
+      <p><b>Other Windows PCs.</b> Windows 10 or 11, 64-bit, Intel or AMD. Speech recognition runs on the processor, using the smaller Whisper medium model. That model is about 1.5 GB of the download. The transcript can arrive later and miss more.</p>
+      <p><b>Every computer.</b> About 3 GB of free disk space. Internet only for the first download. A microphone, or another audio input that carries the speaker.</p>
+      <p><a href="#faq">Questions? See the FAQ</a></p>
     </div>
   </section>
 
